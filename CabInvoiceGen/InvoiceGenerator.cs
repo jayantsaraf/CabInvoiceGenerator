@@ -20,5 +20,26 @@ namespace CabInvoiceGen
             double totalFare = minimumFare + farePerKM * distance + farePerMinute* time;
             return totalFare;
         }
+        /// <summary>
+        /// Calculate total fare of multiple rides
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public double CalculateMultipleFare(double[] distance, int[] time)
+        {
+            int minimumFare = 5;
+            int farePerKM = 10;
+            int farePerMinute = 1;
+            double totalOfMultipleRides = 0;
+            for (int i= 1;i < distance.Length; i++)
+            {
+                double totalFare = minimumFare + farePerKM * distance[i] + farePerMinute * time[i];
+                totalOfMultipleRides += totalFare;
+            }
+            
+            return totalOfMultipleRides;
+        }
+
     }
 }
