@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CabInvoiceGenerator;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +13,9 @@ namespace CabInvoiceGen
         /// <param name="distance"></param>
         /// <param name="time"></param>
         /// <returns></returns>
+        /// 
+
+       
         public double CalculateFare(double distance, int time)
         {
             int minimumFare = 5;
@@ -32,7 +36,7 @@ namespace CabInvoiceGen
             int farePerKM = 10;
             int farePerMinute = 1;
             double totalOfMultipleRides = 0;
-            for (int i= 1;i < distance.Length; i++)
+            for (int i= 0;i < distance.Length; i++)
             {
                 double totalFare = minimumFare + farePerKM * distance[i] + farePerMinute * time[i];
                 totalOfMultipleRides += totalFare;
@@ -40,6 +44,26 @@ namespace CabInvoiceGen
             
             return totalOfMultipleRides;
         }
+        /// <summary>
+        /// Calculate average fare of multiple rides
+        /// </summary>
+        /// <param name="rides"></param>
+        /// <returns></returns>
+        public InvoiceSummary EnhancedInvoice(Ride[] rides)
+        {
+            int minimumFare = 5;
+            int farePerKM = 10;
+            int farePerMinute = 1;
+            double totalOfMultipleRides = 0;
+            foreach(Ride ride in rides)
+            {
+                double totalFare = minimumFare + farePerKM * ride.distance + farePerMinute * ride.time;
+                totalOfMultipleRides += totalFare;
+            }
+            
+            return new InvoiceSummary(rides.Length, totalOfMultipleRides);
+        }
 
+        
     }
 }
