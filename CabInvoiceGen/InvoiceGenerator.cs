@@ -45,11 +45,11 @@ namespace CabInvoiceGen
             return totalOfMultipleRides;
         }
         /// <summary>
-        /// Calculate average fare of multiple rides
+        /// Calculate 
         /// </summary>
         /// <param name="rides"></param>
         /// <returns></returns>
-        public InvoiceSummary EnhancedInvoice(Ride[] rides)
+        public InvoiceSummary EnhancedInvoice(List<Ride> rides)
         {
             int minimumFare = 5;
             int farePerKM = 10;
@@ -61,7 +61,7 @@ namespace CabInvoiceGen
                 totalOfMultipleRides += totalFare;
             }
             
-            return new InvoiceSummary(rides.Length, totalOfMultipleRides);
+            return new InvoiceSummary(rides.Count, totalOfMultipleRides);
         }
 
         

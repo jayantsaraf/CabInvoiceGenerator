@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using CabInvoiceGen;
 using CabInvoiceGenerator;
+using System.Collections.Generic;
 
 namespace CabInvoiceGenTest
 {
@@ -53,12 +54,33 @@ namespace CabInvoiceGenTest
             InvoiceGenerator invoice = new InvoiceGenerator();
 
             //// Calculating average fare
-            Ride[] rides = { new Ride(10, 60), new Ride(20, 70) };
+            List<Ride> rides = new List<Ride>() { new Ride(10, 60), new Ride(20, 70) };
             InvoiceSummary actual = invoice.EnhancedInvoice(rides);
             InvoiceSummary expected = new InvoiceSummary(2, 440);
 
             ////Checking if the test case passes
             Assert.AreEqual(expected.mNoOfRides, actual.mNoOfRides); 
+        }
+        /// <summary>
+        /// Test case to return total fare of User with UserID = 'Jayant'
+        /// </summary>
+        [Test]
+        public void InvoiceReturns_RidesOfAParticularUser()
+        {
+            //// Generating object of class
+            InvoiceGenerator invoice = new InvoiceGenerator();
+
+            //// Calculating average fare
+            RideRepository user = new RideRepository();
+            user.AddRides("Jayant",new List<Ride>(){ new Ride(10, 60), new Ride(20, 70) });
+            user.AddRides("Tejas", new List<Ride>() { new Ride(10, 60), new Ride(20, 70) });
+            user.AddRides("Jayant", new List<Ride>() { new Ride(10, 60), new Ride(20, 70) });
+            List<Ride> ridesOfUser = user.SearchUserRide("Jayant");
+            InvoiceSummary actual = invoice.EnhancedInvoice(ridesOfUser);
+            InvoiceSummary expected = new InvoiceSummary(2, 880);
+
+            ////Checking if the test case passes
+            Assert.AreEqual(expected.mTotalFare, actual.mTotalFare);
         }
     }
 }
